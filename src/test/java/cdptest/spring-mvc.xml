@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+      http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
+	default-autowire="byName" default-lazy-init="false">
+	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
+	<!-- 加载controller的时候,不加载service,因为此时事物并未生效,若此时加载了service,那么事物无法对service进行拦截 -->
+	<!-- <context:component-scan base-package="org.jeecgframework.web.*,weixin.*"> 
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" 
+		/> </context:component-scan> -->
+
+
+	<context:component-scan base-package="cdptool.*">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+
+
+	<!-- ，Spring容器会在加载完Spring容器后把上下文对象调用这个对象中的setApplicationContext方法 SpringContextHelper调用getBean()方法得到Spring容器中的对象了 -->
+	<!-- ApplicationContext -->
+	<!-- <bean class="org.jeecgframework.core.util.ApplicationContextUtil"></bean> -->
+
+	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射， 配置一个基于注解的定制的WebBindingInitializer，解决日期转换问题，方法级别的处理器映射 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="cacheSeconds" value="0" />
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" /><!-- json转换器 -->
+			</list>
+		</property>
+		<!-- 自定义格式转换 替换spring默认 -->
+		<!-- <property name="webBindingInitializer"> <bean class="org.jeecgframework.core.interceptors.MyWebBinding" 
+			/> </property> -->
+	</bean>
+
+
+	<!-- 组件针对文件上传操作根据需求，注入其属性 文件太大，只能后台出log 前台直接没有反应了 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+		p:defaultEncoding="UTF-8">
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+	</bean>
+
+	<!-- Bean解析器,级别高于默认解析器,寻找bean对象进行二次处理 order的值越小优先级越高 BeanNameViewResolver 
+		不会进行视图缓存 -->
+	<bean id="beanNameViewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver"
+		p:order="0">
+	</bean>
+
+
+	<!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
+	<bean id="defaultViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="3">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="contentType" value="text/html" />
+		<property name="prefix" value="/webpage/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- Excel 处理 根据用户输入进行对象处理 -->
+	<!-- <bean id="jeecgExcelView" class="org.jeecgframework.poi.excel.view.JeecgSingleExcelView" 
+		/> -->
+	<!-- 方言 -->
+	<!-- <bean id="dialect" class="org.jeecgframework.core.common.hibernate.dialect.DialectFactoryBean"> 
+		<property name="dbType" value="${jdbc.dbType}" /> </bean> -->
+	<!-- 异常处理类 cdp spring 自动用这个异常处理类替换原来的 id 完全多余 -->
+	<!-- <bean id="exceptionHandler" class="org.jeecgframework.core.common.exception.MyExceptionHandler" 
+		/> -->
+	<!-- 系统错误转发配置[并记录错误日志] -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView" value="500"></property>   <!-- 默认为500，系统错误(error.jsp) -->
+		<property name="defaultStatusCode" value="404"></property>
+		<property name="statusCodes"><!-- 配置多个statusCode -->
+			<props>
+				<prop key="error">500</prop>  <!-- error.jsp -->
+				<prop key="error1">404</prop>    <!-- error1.jsp -->
+			</props>
+		</property>
+		<property name="exceptionMappings">
+			<props>
+				<!-- 这里你可以根据需要定义N多个错误异常转发 -->
+				<prop key="java.sql.SQLException">dbError</prop> <!-- 数据库错误(dbError.jsp) -->
+				<prop key="org.springframework.web.bind.ServletRequestBindingException">bizError</prop> <!-- 参数绑定错误(如：必须参数没传递)(bizError.jsp) -->
+				<prop key="java.lang.IllegalArgumentException">bizError</prop>  <!-- 参数错误(bizError.jsp) -->
+				<prop key="org.springframework.validation.BindException">bizError</prop>  <!-- 参数类型有误(bizError.jsp) -->
+				<prop key="java.lang.Exception">unknowError</prop>  <!-- 其他错误为'未定义错误'(unknowError.jsp) -->
+			</props>
+		</property>
+	</bean>
+
+	<aop:aspectj-autoproxy />
+	<!-- <context:component-scan base-package="org.jeecgframework.core.interceptors" 
+		/> 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 <context:component-scan 
+		base-package="org.jeecgframework.core.aop" /> -->
+
+
+	<!-- 引入属性文件 -->
+	<context:property-placeholder location="classpath:dbconfig.properties" />
+	<!-- cdp 难道这里下面的bean能直接取到上面引入文件的值 ${jdbc.username.jeecg} 占位符 -->
+	<!-- 配置数据源1 -->
+
+	<!-- <bean name="dataSource_jeecg" class="com.alibaba.druid.pool.DruidDataSource" 
+		init-method="init" destroy-method="close"> <property name="url" value="${jdbc.url.jeecg}" 
+		/> <property name="username" value="${jdbc.username.jeecg}" /> <property 
+		name="password" value="${jdbc.password.jeecg}" /> 初始化连接大小 <property name="initialSize" 
+		value="0" /> 连接池最大使用连接数量 <property name="maxActive" value="20" /> 连接池最大空闲 
+		<property name="maxIdle" value="20" /> 连接池最小空闲 <property name="minIdle" value="5" 
+		/> 获取连接最大等待时间 <property name="maxWait" value="60000" /> <property name="poolPreparedStatements" 
+		value="true" /> <property name="maxPoolPreparedStatementPerConnectionSize" 
+		value="33" /> <property name="validationQuery" value="${validationQuery.sqlserver}" 
+		/> <property name="testOnBorrow" value="false" /> <property name="testOnReturn" 
+		value="false" /> <property name="testWhileIdle" value="true" /> 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 
+		<property name="timeBetweenEvictionRunsMillis" value="60000" /> 配置一个连接在池中最小生存的时间，单位是毫秒 
+		<property name="minEvictableIdleTimeMillis" value="25200000" /> 打开removeAbandoned功能 
+		<property name="removeAbandoned" value="true" /> 1800秒，也就是30分钟 <property 
+		name="removeAbandonedTimeout" value="1800" /> 关闭abanded连接时输出错误日志 <property 
+		name="logAbandoned" value="true" /> 开启Druid的监控统计功能 <property name="filters" 
+		value="stat" /> <property name="filters" value="mergeStat" /> Oracle连接是获取字段注释 
+		<property name="connectProperties"> <props> <prop key="remarksReporting">true</prop> 
+		</props> </property> </bean> -->
+
+
+	<!-- 数据源集合 -->
+	<!-- <bean id="dataSource" class="org.jeecgframework.core.extend.datasource.DynamicDataSource"> 
+		cdp 看了这个类 并没有 targetDataSources属性 不懂 <property name="targetDataSources"> 
+		<map key-type="org.jeecgframework.core.extend.datasource.DataSourceType"> 
+		<entry key="dataSource_jeecg" value-ref="dataSource_jeecg" /> <entry key="mapdataSource" 
+		value-ref="mapdataSource" /> </map> </property> <property name="defaultTargetDataSource" 
+		ref="dataSource_jeecg" /> </bean> -->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<!-- <property name="driverClassName" value="com.microsoft.jdbc.sqlserver.SQLServerDriver"> 
+			</property> -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver">
+		</property>
+		<!-- <property name="url" value="jdbc:microsoft:sqlserver://192.168.0.71:1433;DatabaseName=cdptooldb"> 
+			</property> -->
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/cdptooldb?useUnicode=true">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value="1CUI"></property>
+		<property name="maxActive" value="200"></property>
+		<property name="maxIdle" value="50"></property>
+		<property name="maxWait" value="60000"></property>
+		<property name="removeAbandoned" value="true"></property>
+		<property name="removeAbandonedTimeout" value="30"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- <property name="entityInterceptor" ref="hiberAspect" /> -->
+		<property name="hibernateProperties">
+			<props>
+				<!--<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop> -->
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+			</props>
+		</property>
+		<!-- 注解方式配置 -->
+		<property name="packagesToScan">
+			<list>
+				<!-- <value>cdptool.entity.*</value> -->
+				<!-- <value>cdptool.entity.*</value> .* 找不到 -->
+				<value>cdptool.entity</value>
+				<!-- <value>org.jeecgframework.web.demo.entity.*</value> <value>org.jeecgframework.web.test.entity.*</value> 
+					<value>org.jeecgframework.web.cgform.entity.*</value> <value>org.jeecgframework.web.cgreport.entity.*</value> 
+					<value>weixin.*</value> -->
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- JDBC配置 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<!-- JDBC配置 -->
+	<bean id="namedParameterJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+	<!-- 配置事物管理器，在*ServiceImpl里写@Transactional就可以启用事物管理 -->
+	<bean name="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- JSR303 Validator定义 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+	<!-- 创建SqlSessionFactory，同时指定数据源 -->
+	<!-- 集成mybatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- SqlSessionTemplate 有一个使用 ExecutorType 作为参数的构造方法。这允许你用来 创建对象,比如,一个批量 
+		SqlSession,但是使用了下列 Spring 配置的 XML 文件: -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+		<!-- <constructor-arg index="1" value="BATCH" /> -->
+	</bean>
+
+	<!-- <bean id="userDao" class="cdptool.dao.UserDaoImpl"> <property name="sqlSession" 
+		ref="sqlSession" /> </bean> -->
+
+	<!-- 映射器 只有注册了映射，才可以通过 sqlsession 像 return (account) sqlSession.selectOne("cdptool.dao.AccountMapper.getUser", 
+		userId);查询 -->
+	<!-- <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+		<property name="mapperInterface" value="cdptool.dao.AccountMapper" /> <property 
+		name="sqlSessionFactory" ref="sqlSessionFactory" /> </bean> -->
+	<!-- 没有必要在 Spring 的 XML 配置文件中注册所有的映射器。相反,你可以使用一个 MapperScannerConfigurer 
+		, 它 将 会 查 找 类 路 径 下 的 映 射 器 并 自 动 将 它 们 创 建 成 MapperFactoryBean。 -->
+	<!-- 注 意 , 没 有 必 要 去 指 定 SqlSessionFactory 或 SqlSessionTemplate , 因 为 MapperScannerConfigurer 
+		将会创建 MapperFactoryBean,之后自动装配。但是,如果你使 用了一个 以上的 DataSource ,那 么自动 装配可 能会失效 
+		。这种 情况下 ,你可 以使用 sqlSessionFactoryBeanName 或 sqlSessionTemplateBeanName 属性来设置正确的 
+		bean 名 称来使用。这就是它如何来配置的,注意 bean 的名称是必须的,而不是 bean 的引用,因 此,value 属性在这里替代通常的 
+		ref: -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cdptool.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+
+</beans>
