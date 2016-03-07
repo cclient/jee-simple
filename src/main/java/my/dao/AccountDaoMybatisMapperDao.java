@@ -17,22 +17,22 @@ public class AccountDaoMybatisMapperDao implements IAccountDao {
     @Autowired
     private AccountMapper userMapper;
 
-    public boolean saveAccount(Account account) throws SQLException {
+    public boolean saveAccount(Account account){
         int res = userMapper.saveAccount(account.getUsername());
         return res > 0;
     }
 
-    public boolean delAccount(Account account) throws SQLException {
+    public boolean delAccount(Account account){
         int res = userMapper.delAccount(account.getId());
         return res > 0;
     }
 
-    public boolean updateUser(Account account) throws SQLException {
+    public boolean updateUser(Account account){
         int res = userMapper.updateAccount(account.getUsername(), account.getId());
         return res > 0;
     }
 
-    public Account getAccountById(int id) throws SQLException {
+    public Account getAccountById(int id){
         return userMapper.getAccount(id);
     }
 }

@@ -19,12 +19,13 @@ public class AccountDaoJDBCTemplateDao implements IAccountDao {
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
-    public boolean saveAccount(final Account account) throws SQLException {
+    public boolean saveAccount(final Account account){
         int res = jdbcTemplate.execute(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                PreparedStatement pstmt = con.prepareStatement("INSERT INTO account (username) VALUES (?)");
-                pstmt.setString(1, account.getUsername());
-                return null;
+                PreparedStatement pstmt = null;
+                    pstmt = con.prepareStatement("INSERT INTO account (username) VALUES (?)");
+                    pstmt.setString(1, account.getUsername());
+                    return pstmt;
             }
         }, new PreparedStatementCallback<Integer>() {
             public Integer doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
@@ -34,7 +35,7 @@ public class AccountDaoJDBCTemplateDao implements IAccountDao {
         return res > 0;
     }
 
-    public boolean delAccount(final Account account) throws SQLException {
+    public boolean delAccount(final Account account){
         int res = jdbcTemplate.execute(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 int id = account.getId();
@@ -50,7 +51,7 @@ public class AccountDaoJDBCTemplateDao implements IAccountDao {
         return res > 0;
     }
 
-    public boolean updateUser(final Account account) throws SQLException {
+    public boolean updateUser(final Account account){
         int res = jdbcTemplate.execute(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement("update account set username=? where id=?");
@@ -66,7 +67,7 @@ public class AccountDaoJDBCTemplateDao implements IAccountDao {
         return res > 0;
     }
 
-    public Account getAccountById(final int id) throws SQLException {
+    public Account getAccountById(final int id){
         return jdbcTemplate.execute(new PreparedStatementCreator() {
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 return con.prepareCall("SELECT * FROM account where id=" + id);

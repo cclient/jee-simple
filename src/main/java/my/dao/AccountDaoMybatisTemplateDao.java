@@ -18,22 +18,22 @@ public class AccountDaoMybatisTemplateDao implements IAccountDao {
     @Autowired
     private SqlSessionTemplate sessionTemplate;
 
-    public boolean saveAccount(Account account) throws SQLException {
+    public boolean saveAccount(Account account){
         int res = sessionTemplate.insert("my.dao.AccountMapper.saveAccount");
         return res > 0;
     }
 
-    public boolean delAccount(Account account) throws SQLException {
+    public boolean delAccount(Account account){
         int res = sessionTemplate.delete("my.dao.AccountMapper.delAccount", account.getId());
         return res > 0;
     }
 
-    public boolean updateUser(Account account) throws SQLException {
+    public boolean updateUser(Account account){
         int res = sessionTemplate.update("my.dao.AccountMapper.updateAccount");
         return res > 0;
     }
 
-    public Account getAccountById(int id) throws SQLException {
+    public Account getAccountById(int id){
         return (Account) sessionTemplate.selectOne("my.dao.AccountMapper.getAccount", id);
     }
 }

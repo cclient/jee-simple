@@ -19,28 +19,28 @@ public class AccountDaoMybatisDao implements IAccountDao {
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
-    public boolean saveAccount(Account account) throws SQLException {
+    public boolean saveAccount(Account account){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
         int res = session.insert("my.dao.AccountMapper.saveAccount");
         session.close();
         return res > 0;
     }
 
-    public boolean delAccount(Account account) throws SQLException {
+    public boolean delAccount(Account account){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
         int res = session.delete("my.dao.AccountMapper.delAccount", account.getId());
         session.close();
         return res > 0;
     }
 
-    public boolean updateUser(Account account) throws SQLException {
+    public boolean updateUser(Account account){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
         int res = session.update("my.dao.AccountMapper.updateAccount");
         session.close();
         return res > 0;
     }
 
-    public Account getAccountById(int id) throws SQLException {
+    public Account getAccountById(int id){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
         return (Account) session.selectOne("my.dao.AccountMapper.getAccount", id);
     }

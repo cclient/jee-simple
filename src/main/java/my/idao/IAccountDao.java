@@ -7,11 +7,11 @@ import java.sql.SQLException;
 
 public interface IAccountDao {
 
-    boolean saveAccount(Account Account) throws SQLException;
+    boolean saveAccount(Account Account);
 
-    boolean delAccount(Account Account) throws SQLException;
+    boolean delAccount(Account Account);
 
-    boolean updateUser(Account Account) throws SQLException;
+    boolean updateUser(Account Account);
 
-    Account getAccountById(int id) throws SQLException;
+    Account getAccountById(int id);
 }

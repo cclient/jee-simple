@@ -42,21 +42,16 @@ public class AccountDaoHibernateDao implements IAccountDao {
         }
     }
 
-    public boolean delAccount(Account account) throws SQLException {
+    public boolean delAccount(Account account) {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         session.delete(account);
-        try {
-            tx.commit();
-        } catch (Exception ex) {
-
-        } finally {
-            session.close();
-        }
+        tx.commit();
+        session.close();
         return true;
     }
 
-    public boolean updateUser(Account account) throws SQLException {
+    public boolean updateUser(Account account){
         // TODO Auto-generated method stub
 //		  hibernateTemplate.update(Account);
         String hql = "update Account set name=? where id=?";
@@ -71,7 +66,7 @@ public class AccountDaoHibernateDao implements IAccountDao {
         return res > 0;
     }
 
-    public Account getAccountById(int id) throws SQLException {
+    public Account getAccountById(int id){
         Session session = sessionFactory.openSession();
         Account user = (Account) session.get(Account.class, id);
         session.close();

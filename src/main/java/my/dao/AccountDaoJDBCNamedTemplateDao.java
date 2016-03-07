@@ -17,7 +17,7 @@ public class AccountDaoJDBCNamedTemplateDao implements IAccountDao {
     @Autowired
     private NamedParameterJdbcTemplate parameterJdbcTemplate;
 
-    public boolean saveAccount(Account account) throws SQLException {
+    public boolean saveAccount(Account account) {
         Map hashMap = new HashMap();
         hashMap.put("username", 1);
         int res = parameterJdbcTemplate.execute("INSERT INTO account (username) VALUES (:username)", hashMap, new PreparedStatementCallback<Integer>() {
@@ -29,7 +29,7 @@ public class AccountDaoJDBCNamedTemplateDao implements IAccountDao {
         return res > 0;
     }
 
-    public boolean delAccount(Account account) throws SQLException {
+    public boolean delAccount(Account account) {
         int id = account.getId();
         Map hashMap = new HashMap();
         hashMap.put("id", id);
@@ -42,7 +42,7 @@ public class AccountDaoJDBCNamedTemplateDao implements IAccountDao {
         return res > 0;
     }
 
-    public boolean updateUser(Account account) throws SQLException {
+    public boolean updateUser(Account account) {
         Map hashMap = new HashMap();
         hashMap.put("username", account.getUsername());
         hashMap.put("id", account.getId());
@@ -54,7 +54,7 @@ public class AccountDaoJDBCNamedTemplateDao implements IAccountDao {
         return res > 0;
     }
 
-    public Account getAccountById(int id) throws SQLException {
+    public Account getAccountById(int id) {
         Map hashMap = new HashMap();
         hashMap.put("id", id);
         return parameterJdbcTemplate.execute("SELECT * FROM account where id=:id", hashMap, new PreparedStatementCallback<Account>() {
