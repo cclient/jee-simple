@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="my.entity.AccountMapper">
+    <select id="getAccount" parameterType="int" resultType="my.entity.Account" >
+        SELECT * FROM account WHERE id = #{id}
+    </select>
+    <update parameterType="my.entity.Account" id="updateAccount">
+        UPDATE account SET username=#{username} WHERE id = #{id}
+    </update>
+    <delete id="delAccount">
+        DELETE FROM account WHERE id =#{id};
+    </delete>
+    <insert id="saveAccount">
+        INSERT INTO account (username) VALUES(#{username});
+    </insert>
+</mapper>

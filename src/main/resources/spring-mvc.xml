@@ -18,26 +18,37 @@
             expression="org.springframework.stereotype.Service" />
     </context:component-scan> -->
 
-    <!--<context:component-scan base-package="my.dao">-->
-    <!--&lt;!&ndash;<context:exclude-filter type="annotation"&ndash;&gt;-->
-    <!--&lt;!&ndash;expression="org.springframework.stereotype.Service"/>&ndash;&gt;-->
-    <!--</context:component-scan>-->
 
 
-    <bean id="accountDaoJDBCDao" class="my.dao.AccountDaoJDBCDao"></bean>
-    <bean id="AccountDaoJDBCTemplateDao" class="my.dao.AccountDaoJDBCTemplateDao"></bean>
-    <bean id="AccountDaoJDBCNamedTemplateDao" class="my.dao.AccountDaoJDBCNamedTemplateDao"></bean>
 
-    <bean id="AccountDaoHibernateDao" class="my.dao.AccountDaoHibernateDao"></bean>
-    <bean id="AccountDaoMybatisDao" class="my.dao.AccountDaoMybatisDao"></bean>
-    <bean id="AccountDaoMybatisTemplateDao" class="my.dao.AccountDaoMybatisTemplateDao"></bean>
-    <bean id="AccountDaoMybatisMapperDao" class="my.dao.AccountDaoMybatisMapperDao">
-        <constructor-arg ref="sqlSessionTemplate"/>
-    </bean>
+
 
 
     <context:component-scan base-package="my.entity">
     </context:component-scan>
+
+    <!--<bean id="AccountDaoMybatisMapperDao" class="my.dao.AccountDaoMybatisMapperDao">-->
+        <!--<constructor-arg ref="sqlSessionTemplate"/>-->
+    <!--</bean>-->
+
+    <context:component-scan base-package="my.dao">
+        <!--<context:exclude-filter type="custom" expression="my.dao.AccountDaoMybatisMapperDao">-->
+
+        <!--</context:exclude-filter>-->
+        <!--<context:exclude-filter type="annotation"-->
+    </context:component-scan>
+
+
+    <!--<bean id="accountDaoJDBCDao" class="my.dao.AccountDaoJDBCDao"></bean>-->
+    <!--<bean id="AccountDaoJDBCTemplateDao" class="my.dao.AccountDaoJDBCTemplateDao"></bean>-->
+    <!--<bean id="AccountDaoJDBCNamedTemplateDao" class="my.dao.AccountDaoJDBCNamedTemplateDao"></bean>-->
+
+    <!--<bean id="AccountDaoHibernateDao" class="my.dao.AccountDaoHibernateDao"></bean>-->
+    <!--<bean id="AccountDaoMybatisDao" class="my.dao.AccountDaoMybatisDao"></bean>-->
+    <!--<bean id="AccountDaoMybatisTemplateDao" class="my.dao.AccountDaoMybatisTemplateDao"></bean>-->
+
+    <!--<bean id="AccountDaoMybatisMapperIocDao" class="my.dao.AccountDaoMybatisMapperIocDao"></bean>-->
+
 
 
     <!--<bean id="demoDao" class="my.first.DemoDao"></bean>-->

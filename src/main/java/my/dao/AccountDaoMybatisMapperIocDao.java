@@ -3,28 +3,15 @@ package my.dao;
 import my.entity.Account;
 import my.entity.AccountMapper;
 import my.idao.IAccountDao;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import java.sql.SQLException;
-
 @Repository
-public class AccountDaoMybatisMapperDao implements IAccountDao {
-    //    @Autowired
-    private SqlSessionTemplate sessionTemplate;
-
-    private AccountMapper mapper;
+public class AccountDaoMybatisMapperIocDao implements IAccountDao {
     @Autowired
-    public AccountDaoMybatisMapperDao(@Qualifier("sqlSessionTemplate") SqlSessionTemplate sessionTemplate) {
-        this.sessionTemplate = sessionTemplate;
-        mapper = this.sessionTemplate.getMapper(AccountMapper.class);
-    }
-
+    @Qualifier("accountMapper")
+    private AccountMapper mapper;
     public boolean saveAccount(Account account) {
         int res = mapper.saveAccount(account.getUsername());
         return res > 0;

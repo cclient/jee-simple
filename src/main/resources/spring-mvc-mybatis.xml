@@ -31,22 +31,24 @@
     <!-- 集成mybatis -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+
     </bean>
 
     <!-- SqlSessionTemplate 有一个使用 ExecutorType 作为参数的构造方法。这允许你用来 创建对象,比如,一个批量
         SqlSession,但是使用了下列 Spring 配置的 XML 文件: -->
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory"/>
+
         <!-- <constructor-arg index="1" value="BATCH" /> -->
     </bean>
 
     <!-- <bean id="userDao" class="my.dao.UserDaoImpl"> <property name="sqlSession"
         ref="sqlSession" /> </bean> -->
 
-    <!-- 映射器 只有注册了映射，才可以通过 sqlsession 像 return (Account) sqlSession.selectOne("my.dao.AccountMapper.getUser",
+    <!-- 映射器 只有注册了映射，才可以通过 sqlsession 像 return (Account) sqlSession.selectOne("my.entity.AccountMapper.getUser",
         userId);查询 -->
     <!-- <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="my.dao.AccountMapper" /> <property
+        <property name="mapperInterface" value="my.entity.AccountMapper" /> <property
         name="sqlSessionFactory" ref="sqlSessionFactory" /> </bean> -->
     <!-- 没有必要在 Spring 的 XML 配置文件中注册所有的映射器。相反,你可以使用一个 MapperScannerConfigurer
         , 它 将 会 查 找 类 路 径 下 的 映 射 器 并 自 动 将 它 们 创 建 成 MapperFactoryBean。 -->
@@ -56,7 +58,13 @@
         bean 名 称来使用。这就是它如何来配置的,注意 bean 的名称是必须的,而不是 bean 的引用,因 此,value 属性在这里替代通常的
         ref: -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="my.dao"/>
+        <property name="basePackage" value="my.entity"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
+
+    <bean id="accountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="my.entity.AccountMapper" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+
 </beans>

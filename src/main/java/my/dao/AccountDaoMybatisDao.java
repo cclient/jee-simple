@@ -22,28 +22,28 @@ public class AccountDaoMybatisDao implements IAccountDao {
 
     public boolean saveAccount(Account account){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
-        int res = session.insert("my.dao.AccountMapper.saveAccount",account.getUsername());
+        int res = session.insert("my.entity.AccountMapper.saveAccount",account.getUsername());
         session.close();
         return res > 0;
     }
 
     public boolean delAccount(Account account){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
-        int res = session.delete("my.dao.AccountMapper.delAccount", account.getId());
+        int res = session.delete("my.entity.AccountMapper.delAccount", account.getId());
         session.close();
         return res > 0;
     }
 
     public boolean updateUser(Account account){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
-        int res = session.update("my.dao.AccountMapper.updateAccount",account);
+        int res = session.update("my.entity.AccountMapper.updateAccount",account);
         session.close();
         return res > 0;
     }
 
     public Account getAccountById(int id){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
-        return (Account) session.selectOne("my.dao.AccountMapper.getAccount", id);
+        return (Account) session.selectOne("my.entity.AccountMapper.getAccount", id);
     }
 }
 
