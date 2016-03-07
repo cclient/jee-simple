@@ -40,18 +40,16 @@
         </tx:attributes>
     </tx:advice>
 
-    <aop:config>
-        <aop:pointcut id="bussinessService"
-                      expression="execution(public * x.y..*.*(..))"/>
-        <aop:advisor pointcut-ref="bussinessService"
-                     advice-ref="txAdvice1"/>
-    </aop:config>
-
-
+    <!--<aop:config>-->
+        <!--<aop:pointcut id="bussinessService"-->
+                      <!--expression="execution(public * x.y..*.*(..))"/>-->
+        <!--<aop:advisor pointcut-ref="bussinessService"-->
+                     <!--advice-ref="txAdvice1"/>-->
+    <!--</aop:config>-->
     <aop:config>
         <!--com.baidu包下所有以Forum结束的类-->
-        <aop:pointcut id="bussinessService2"
-                      expression="execution(* com.baidu.*Forum.*(..))"/>
+        <aop:pointcut id="bussinessService"
+                      expression="execution(* my.dao.AccountDaoMybatis*.*(..))"/>
         <aop:advisor pointcut-ref="bussinessService"
                      advice-ref="txAdvice1"/>
     </aop:config>
@@ -59,10 +57,7 @@
 
     <!--对标注 Transactional注解的bean 进行加工增强-->
     <tx:annotation-driven transaction-manager="transactionManager_hibernate"/>
-
-
     <!-- JSR303 Validator定义 -->
-
     <bean id="validator"
           class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 </beans>

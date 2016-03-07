@@ -8,11 +8,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.sql.SQLException;
 
 @Repository
+@Transactional(propagation = Propagation.REQUIRED)
 public class AccountDaoHibernateDao implements IAccountDao {
     @Autowired
     private SessionFactory sessionFactory;

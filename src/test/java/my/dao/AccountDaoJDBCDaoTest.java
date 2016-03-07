@@ -22,7 +22,7 @@ public class AccountDaoJDBCDaoTest {
 //    @Resource(type = AccountDaoMybatisDao.class)
 //    @Resource(type = AccountDaoMybatisTemplateDao.class)
 //    @Resource(type = AccountDaoMybatisMapperDao.class)
-    @Resource(type = AccountDaoMybatisMapperIocDao.class)
+    @Resource(type = AccountDaoHibernateDao.class)
 
     private IAccountDao dao;
 
