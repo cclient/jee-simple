@@ -7,9 +7,9 @@ public interface AccountMapper {
     @Select("SELECT * FROM account WHERE id = #{accountid}")
     Account getAccount(@Param("accountid") int id);
     @Insert("INSERT INTO account (username) VALUES(#{username});")
-    int saveAccount(@Param("useranem") String username);
-    @Delete("DELETE account WHERE id = #{accountid};")
-    int delAccount(@Param("accountid") int id);
-    @Update("UPDATE account SET username=#{username} WHERE id = #{accountid}")
-    int updateAccount(@Param("username") String username,@Param("accountid") int id);
+    int saveAccount(@Param("username") String username);
+    @Delete("DELETE FROM account WHERE id =#{id};")
+    int delAccount(@Param("id") int id);
+    @Update("UPDATE account SET username=#{username} WHERE id = #{id}")
+    int updateAccount(@Param("username") String username,@Param("id") int id);
 }

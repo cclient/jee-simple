@@ -54,7 +54,7 @@ public class AccountDaoHibernateDao implements IAccountDao {
     public boolean updateUser(Account account){
         // TODO Auto-generated method stub
 //		  hibernateTemplate.update(Account);
-        String hql = "update Account set name=? where id=?";
+        String hql = "update Account set username=? where id=?";
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         Query query = session.createQuery(hql);

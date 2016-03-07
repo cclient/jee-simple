@@ -78,11 +78,10 @@ public class AccountDaoJDBCDao implements IAccountDao {
     public boolean updateUser(Account account) {
         try {
             conn = bds.getConnection();
-            int id = account.getId();
             Connection conn = bds.getConnection();
             PreparedStatement pstmt = conn.prepareStatement("update  Account SET username=?  where id=?");
             pstmt.setString(1, account.getUsername());
-            pstmt.setInt(2, id);
+            pstmt.setInt(2, account.getId());
             int count = pstmt.executeUpdate();
             if (pstmt != null) { // 关闭声明
                 try {

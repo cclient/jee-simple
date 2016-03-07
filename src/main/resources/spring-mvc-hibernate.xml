@@ -33,9 +33,15 @@
             </props>
         </property>
         <!-- 注解方式配置 -->
-        <!-- <property name="packagesToScan"> <list> <value>org.jeecgframework.web.system.pojo.*</value>
-            <value>org.jeecgframework.web.demo.entity.*</value> <value>org.jeecgframework.web.test.entity.*</value>
-            <value>org.jeecgframework.web.cgform.entity.*</value> <value>org.jeecgframework.web.cgreport.entity.*</value>
-            <value>weixin.*</value> </list> </property> -->
+        <property name="packagesToScan">
+            <list>
+                <value>my.entity</value>
+                <!--<value>org.jeecgframework.web.demo.entity.*</value>-->
+                <!--<value>org.jeecgframework.web.test.entity.*</value>-->
+                <!--<value>org.jeecgframework.web.cgform.entity.*</value>-->
+                <!--<value>org.jeecgframework.web.cgreport.entity.*</value>-->
+                <!--<value>weixin.*</value>-->
+            </list>
+        </property>
     </bean>
 </beans>

@@ -19,7 +19,7 @@ public class AccountDaoJDBCNamedTemplateDao implements IAccountDao {
 
     public boolean saveAccount(Account account) {
         Map hashMap = new HashMap();
-        hashMap.put("username", 1);
+        hashMap.put("username", account.getUsername());
         int res = parameterJdbcTemplate.execute("INSERT INTO account (username) VALUES (:username)", hashMap, new PreparedStatementCallback<Integer>() {
             public Integer doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
 //                return null;

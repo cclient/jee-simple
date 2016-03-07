@@ -18,12 +18,28 @@
             expression="org.springframework.stereotype.Service" />
     </context:component-scan> -->
 
-    <!--<context:component-scan base-package="my.dao.*">-->
-        <!--&lt;!&ndash;<context:exclude-filter type="annotation"&ndash;&gt;-->
-                                <!--&lt;!&ndash;expression="org.springframework.stereotype.Service"/>&ndash;&gt;-->
+    <!--<context:component-scan base-package="my.dao">-->
+    <!--&lt;!&ndash;<context:exclude-filter type="annotation"&ndash;&gt;-->
+    <!--&lt;!&ndash;expression="org.springframework.stereotype.Service"/>&ndash;&gt;-->
     <!--</context:component-scan>-->
 
+
     <bean id="accountDaoJDBCDao" class="my.dao.AccountDaoJDBCDao"></bean>
+    <bean id="AccountDaoJDBCTemplateDao" class="my.dao.AccountDaoJDBCTemplateDao"></bean>
+    <bean id="AccountDaoJDBCNamedTemplateDao" class="my.dao.AccountDaoJDBCNamedTemplateDao"></bean>
+
+    <bean id="AccountDaoHibernateDao" class="my.dao.AccountDaoHibernateDao"></bean>
+    <bean id="AccountDaoMybatisDao" class="my.dao.AccountDaoMybatisDao"></bean>
+    <bean id="AccountDaoMybatisTemplateDao" class="my.dao.AccountDaoMybatisTemplateDao"></bean>
+    <bean id="AccountDaoMybatisMapperDao" class="my.dao.AccountDaoMybatisMapperDao">
+        <constructor-arg ref="sqlSessionTemplate"/>
+    </bean>
+
+
+    <context:component-scan base-package="my.entity">
+    </context:component-scan>
+
+
     <!--<bean id="demoDao" class="my.first.DemoDao"></bean>-->
     <!-- 	<context:component-scan base-package="com.buss.*">
             <context:exclude-filter type="annotation"

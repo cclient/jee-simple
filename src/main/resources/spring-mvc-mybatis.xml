@@ -26,10 +26,9 @@
           class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
-
-
-    <!-- 集成mybatis -->
+    
     <!-- 创建SqlSessionFactory，同时指定数据源 -->
+    <!-- 集成mybatis -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
     </bean>

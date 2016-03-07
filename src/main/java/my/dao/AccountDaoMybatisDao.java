@@ -18,10 +18,11 @@ public class AccountDaoMybatisDao implements IAccountDao {
     @Qualifier("sqlSessionFactory")
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
+    //        XML 定义
 
     public boolean saveAccount(Account account){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
-        int res = session.insert("my.dao.AccountMapper.saveAccount");
+        int res = session.insert("my.dao.AccountMapper.saveAccount",account.getUsername());
         session.close();
         return res > 0;
     }
@@ -35,7 +36,7 @@ public class AccountDaoMybatisDao implements IAccountDao {
 
     public boolean updateUser(Account account){
         session = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
-        int res = session.update("my.dao.AccountMapper.updateAccount");
+        int res = session.update("my.dao.AccountMapper.updateAccount",account);
         session.close();
         return res > 0;
     }

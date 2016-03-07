@@ -22,9 +22,11 @@
         </property>
         <!-- <property name="url" value="jdbc:microsoft:sqlserver://192.168.0.71:1433;DatabaseName=mydb">
             </property> -->
-        <property name="url" value="${jdbc.url.main}"/>
-        <property name="username" value="${jdbc.username.main}"/>
-        <property name="password" value="${jdbc.password.main}"/>
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/cdptooldb?useUnicode=true&amp;characterEncoding=UTF-8">
+        </property>
+        <property name="username" value="root"></property>
+        <property name="password" value="1CUI"></property>
         <property name="maxActive" value="200"></property>
         <property name="maxIdle" value="50"></property>
         <property name="maxWait" value="60000"></property>

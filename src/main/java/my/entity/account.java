@@ -3,11 +3,13 @@ package my.entity;
 import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Repository;
 
 
 @Entity
 @Table(name = "Account", schema = "")
 @SuppressWarnings("serial")
+
 public class Account {
     /**
      * id
