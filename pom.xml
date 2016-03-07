@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.cdp</groupId>
 	<version>2.0</version>
-	<artifactId>cdptest</artifactId>
+	<artifactId>springnet</artifactId>
 	<packaging>war</packaging>
 	<properties>
 		<!-- <codegenerate.version>3.4.6</codegenerate.version> <minidao.version>1.4.0</minidao.version> -->
@@ -758,6 +758,11 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
 		</dependency>
 	</dependencies>
 
