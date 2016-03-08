@@ -14,7 +14,8 @@ import javax.annotation.Resource;
  * Created by cdpmac on 30/3/4.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-mvc.xml", "classpath:spring-mvc-mybatis.xml", "classpath:spring-mvc-hibernate.xml"})
+@ContextConfiguration(locations = {"classpath:spring-mvc.xml", "classpath:spring-mvc-mybatis.xml", "classpath:spring-mvc-hibernate.xml","classpath:spring-mvc-txaop.xml"})
+//@ContextConfiguration(locations = {"classpath:spring-mvc.xml", "classpath:spring-mvc-mybatis.xml", "classpath:spring-mvc-hibernate.xml"})
 public class AccountDaoJDBCDaoTest {
     //    @Resource(type = AccountDaoJDBCDao.class)
 //    @Resource(type = AccountDaoJDBCTemplateDao.class)
@@ -22,8 +23,8 @@ public class AccountDaoJDBCDaoTest {
 //    @Resource(type = AccountDaoMybatisDao.class)
 //    @Resource(type = AccountDaoMybatisTemplateDao.class)
 //    @Resource(type = AccountDaoMybatisMapperDao.class)
-    @Resource(type = AccountDaoHibernateDao.class)
-
+    @Resource(type = AccountDaoMybatisMapperIocDao.class)
+//    @Resource
     private IAccountDao dao;
 
 

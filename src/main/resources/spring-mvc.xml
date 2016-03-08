@@ -13,29 +13,20 @@
             http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
     <!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
     <!-- 加载controller的时候,不加载service,因为此时事物并未生效,若此时加载了service,那么事物无法对service进行拦截 -->
-    <!-- <context:component-scan base-package="my.controller.*">
-         <context:exclude-filter type="annotation"
-            expression="org.springframework.stereotype.Service" />
-    </context:component-scan> -->
-
-
-
-
-
+    <context:component-scan base-package="my.controller">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
 
 
     <context:component-scan base-package="my.entity">
     </context:component-scan>
 
     <!--<bean id="AccountDaoMybatisMapperDao" class="my.dao.AccountDaoMybatisMapperDao">-->
-        <!--<constructor-arg ref="sqlSessionTemplate"/>-->
+    <!--<constructor-arg ref="sqlSessionTemplate"/>-->
     <!--</bean>-->
 
     <context:component-scan base-package="my.dao">
-        <!--<context:exclude-filter type="custom" expression="my.dao.AccountDaoMybatisMapperDao">-->
-
-        <!--</context:exclude-filter>-->
-        <!--<context:exclude-filter type="annotation"-->
     </context:component-scan>
 
 
@@ -44,11 +35,11 @@
     <!--<bean id="AccountDaoJDBCNamedTemplateDao" class="my.dao.AccountDaoJDBCNamedTemplateDao"></bean>-->
 
     <!--<bean id="AccountDaoHibernateDao" class="my.dao.AccountDaoHibernateDao"></bean>-->
+    <!--<bean id="AccountDaoHibernateTxDao" class="my.dao.AccountDaoHibernateTxDao"></bean>-->
     <!--<bean id="AccountDaoMybatisDao" class="my.dao.AccountDaoMybatisDao"></bean>-->
     <!--<bean id="AccountDaoMybatisTemplateDao" class="my.dao.AccountDaoMybatisTemplateDao"></bean>-->
 
     <!--<bean id="AccountDaoMybatisMapperIocDao" class="my.dao.AccountDaoMybatisMapperIocDao"></bean>-->
-
 
 
     <!--<bean id="demoDao" class="my.first.DemoDao"></bean>-->

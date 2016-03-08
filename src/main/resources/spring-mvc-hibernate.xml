@@ -18,10 +18,10 @@
     </bean>
 
     <!--hibernate 事务管理器-->
-    <bean id="hibernateSessionFactory"
+    <bean id="hibernateSessionFactory" name="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <!-- <property name="entityInterceptor" ref="hiberAspect" /> -->
+         <!--<property name="entityInterceptor" ref="hiberAspect" /> -->
         <property name="hibernateProperties">
             <props>
                 <!--<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop> -->
@@ -35,7 +35,7 @@
         <!-- 注解方式配置 -->
         <property name="packagesToScan">
             <list>
-                <value>my.entity</value>
+                <value>my.entity.*</value>
                 <!--<value>org.jeecgframework.web.demo.entity.*</value>-->
                 <!--<value>org.jeecgframework.web.test.entity.*</value>-->
                 <!--<value>org.jeecgframework.web.cgform.entity.*</value>-->

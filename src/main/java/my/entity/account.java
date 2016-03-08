@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Table(name = "Account", schema = "")
 @SuppressWarnings("serial")
 
+//@Repository
 public class Account {
     /**
      * id

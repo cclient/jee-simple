@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 //import org.jeecgframework.core.util.NumberComparator;
 //import org.jeecgframework.core.util.ResourceUtil;
 //import org.jeecgframework.core.util.oConvertUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ import my.core.ContextHolderUtils;
  *
  * @author 张代浩
  */
-//@Scope("prototype")
+@Scope("prototype")
 @Controller
 @RequestMapping("/loginController")
 //@RequestMapping("/loginController")

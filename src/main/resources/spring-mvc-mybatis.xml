@@ -26,7 +26,7 @@
           class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
         <constructor-arg ref="dataSource"/>
     </bean>
-    
+
     <!-- 创建SqlSessionFactory，同时指定数据源 -->
     <!-- 集成mybatis -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -57,14 +57,18 @@
         。这种 情况下 ,你可 以使用 sqlSessionFactoryBeanName 或 sqlSessionTemplateBeanName 属性来设置正确的
         bean 名 称来使用。这就是它如何来配置的,注意 bean 的名称是必须的,而不是 bean 的引用,因 此,value 属性在这里替代通常的
         ref: -->
+
+
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="my.entity"/>
+        <!--<property name="beanName" value="my.entity.Account"></property>-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
     <bean id="accountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="my.entity.AccountMapper" />
-        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+        <property name="mapperInterface" value="my.entity.AccountMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
+
 
 </beans>
