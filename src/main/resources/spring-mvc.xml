@@ -89,23 +89,70 @@
         </property>
     </bean>
 
-    <!-- Bean解析器,级别高于默认解析器,寻找bean对象进行二次处理 order的值越小优先级越高 BeanNameViewResolver
-        不会进行视图缓存 -->
-    <bean id="beanNameViewResolver"
-          class="org.springframework.web.servlet.view.BeanNameViewResolver"
-          p:order="0">
+    <!--&lt;!&ndash; Bean解析器,级别高于默认解析器,寻找bean对象进行二次处理 order的值越小优先级越高 BeanNameViewResolver-->
+        <!--不会进行视图缓存 &ndash;&gt;-->
+    <!--<bean id="beanNameViewResolver"-->
+          <!--class="org.springframework.web.servlet.view.BeanNameViewResolver"-->
+          <!--p:order="0">-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- &ndash;&gt;-->
+    <!--<bean id="defaultViewResolver"-->
+          <!--class="org.springframework.web.servlet.view.InternalResourceViewResolver"-->
+          <!--p:order="3">-->
+        <!--<property name="viewClass"-->
+                  <!--value="org.springframework.web.servlet.view.JstlView"/>-->
+        <!--<property name="contentType" value="text/html"/>-->
+        <!--<property name="prefix" value="/webpage/"/>-->
+        <!--<property name="suffix" value=".jsp"/>-->
+    <!--</bean>-->
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="0"/>
+        <property name="favorParameter" value="false"/>
+        <property name="ignoreAcceptHeader" value="true"/>
+        <property name="defaultContentType" value="text/html"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json"/>
+                <!--<entry key="xml" value="application/xml"/>-->
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+                <bean
+                        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="viewClass"
+                              value="org.springframework.web.servlet.view.JstlView"/>
+                    <property name="contentType" value="text/html"/>
+                    <property name="prefix" value="/webpage/"/>
+                    <property name="suffix" value=".jsp"/>
+                </bean>
+            </list>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <bean id="jsonView"
+                      class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+                <!--<bean id="xmlView"-->
+                <!--class="org.springframework.web.servlet.view.xml.MarshallingView">-->
+                <!--<constructor-arg>-->
+                <!--<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">-->
+                <!--<property name="classesToBeBound">-->
+                <!--<list>-->
+                <!--<value>com.cnblogs.yjmyzz.dto.UserInfo</value>-->
+                <!--<value>com.cnblogs.yjmyzz.dto.ListBean</value>-->
+                <!--</list>-->
+                <!--</property>-->
+                <!--</bean>-->
+                <!--</constructor-arg>-->
+                <!--</bean>-->
+            </list>
+        </property>
     </bean>
 
-    <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
-    <bean id="defaultViewResolver"
-          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:order="3">
-        <property name="viewClass"
-                  value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="contentType" value="text/html"/>
-        <property name="prefix" value="/webpage/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+
 
     <!-- Excel 处理 根据用户输入进行对象处理 -->
     <!-- <bean id="jeecgExcelView" class="org.jeecgframework.poi.excel.view.JeecgSingleExcelView"

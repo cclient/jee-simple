@@ -38,6 +38,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-oxm:3.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.ckfinder:CKFinder-updateByAlexander:2.4" level="project" />
@@ -155,7 +156,5 @@
     <orderEntry type="library" name="Maven: com.baidu.bcs:baidu-sdk:1.4.5" level="project" />
     <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: jaxen:jaxen:1.1.6" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-core:3.1.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:3.1.1.RELEASE" level="project" />
   </component>
 </module>

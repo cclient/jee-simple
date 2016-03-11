@@ -2,6 +2,7 @@ package my.entity;
 
 import javax.persistence.*;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Entity
 @Table(name = "Account", schema = "")
 @SuppressWarnings("serial")
-
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 //@Repository
 public class Account {
     /**

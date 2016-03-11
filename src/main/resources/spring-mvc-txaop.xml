@@ -12,33 +12,33 @@
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
        default-autowire="byName" default-lazy-init="false">
 
-    <!--<import resource="spring-mvc-datasource.xml"></import>-->
+    <import resource="spring-mvc-datasource.xml"></import>
 
 
-    <!--&lt;!&ndash;jdbc/mybatis 应用基于数据源的事务管理器&ndash;&gt;-->
-    <!--<bean id="transactionManager_base" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
-        <!--<property name="dataSource" ref="dataSource"></property>-->
-    <!--</bean>-->
+    <!--jdbc/mybatis 应用基于数据源的事务管理器-->
+    <bean id="transactionManager_base" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
 
-    <!--&lt;!&ndash; 配置事物管理器，在*ServiceImpl里写@Transactional就可以启用事物管理 &ndash;&gt;-->
-    <!--<bean name="transactionManager_hibernate"-->
-          <!--class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
-        <!--<property name="sessionFactory" ref="hibernateSessionFactory"></property>-->
-    <!--</bean>-->
+    <!-- 配置事物管理器，在*ServiceImpl里写@Transactional就可以启用事物管理 -->
+    <bean name="transactionManager_hibernate"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="hibernateSessionFactory"></property>
+    </bean>
 
-    <!--&lt;!&ndash;事务增强&ndash;&gt;-->
-    <!--<tx:advice id="txAdvice1" transaction-manager="transactionManager_base">-->
-        <!--&lt;!&ndash;事务属性&ndash;&gt;-->
-        <!--<tx:attributes>-->
-            <!--<tx:method name="get*" read-only="false"/>-->
-            <!--&lt;!&ndash;异常回滚&ndash;&gt;-->
-            <!--<tx:method name="add*" rollback-for="Exception"/>-->
-            <!--&lt;!&ndash;隔离级别&ndash;&gt;-->
-            <!--<tx:method name="update*" isolation="DEFAULT" timeout="-1"/>-->
-            <!--&lt;!&ndash;传播行为&ndash;&gt;-->
-            <!--<tx:method name="save*" propagation="REQUIRED"/>-->
-        <!--</tx:attributes>-->
-    <!--</tx:advice>-->
+    <!--事务增强-->
+    <tx:advice id="txAdvice1" transaction-manager="transactionManager_base">
+        <!--事务属性-->
+        <tx:attributes>
+            <tx:method name="get*" read-only="false"/>
+            <!--异常回滚-->
+            <tx:method name="add*" rollback-for="Exception"/>
+            <!--隔离级别-->
+            <tx:method name="update*" isolation="DEFAULT" timeout="-1"/>
+            <!--传播行为-->
+            <tx:method name="save*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
 
     <!--&lt;!&ndash;<aop:config>&ndash;&gt;-->
         <!--&lt;!&ndash;<aop:pointcut id="bussinessService"&ndash;&gt;-->

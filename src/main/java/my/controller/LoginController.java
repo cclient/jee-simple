@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 //import org.jeecgframework.core.util.NumberComparator;
 //import org.jeecgframework.core.util.ResourceUtil;
 //import org.jeecgframework.core.util.oConvertUtils;
+import my.entity.Account;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -51,6 +52,15 @@ public class LoginController {
     @ResponseBody
     public String gobody() {
         return "hello word";
+    }
+
+    @RequestMapping(params = "account")
+    @ResponseBody
+    public Account goAccount() {
+        Account acc = new Account();
+        acc.setId(55);
+        acc.setUsername("jsontest");
+        return acc;
     }
 
     @RequestMapping(params = "nobody")

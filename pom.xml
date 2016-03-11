@@ -147,6 +147,11 @@
 	</repositories>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<!-- activation -->
 		<dependency>
 			<groupId>javax.activation</groupId>
