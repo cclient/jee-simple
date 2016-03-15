@@ -3,8 +3,8 @@ package my.entity;
 import org.apache.ibatis.annotations.*;
 
 public interface AccountMapper {
-    //    @Select("SELECT * FROM account WHERE id = #{accountid}")
-    Account getAccount(@Param("accountid") int id);
+    //    @Select("SELECT * FROM account WHERE id = #{id}")
+    Account getAccount(@Param("id") int id);
 
     //    @Insert("INSERT INTO account (username) VALUES(#{username});")
     int saveAccount(@Param("username") String username);

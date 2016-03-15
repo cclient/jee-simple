@@ -20,7 +20,7 @@ public class WriteLog {
     public  void After(){
         System.out.println("after");
     }
-    @AfterReturning(value = "target(my.dao.AccountDaoHibernateTxDao)&&execution(* saveAccount(..))",returning ="retval")
+    @AfterReturning(value = "target(my.dao.AccountHibernateTxDao)&&execution(* saveAccount(..))",returning ="retval")
     public  void AfterReturn(boolean retval){
 
         System.out.println("after return ");

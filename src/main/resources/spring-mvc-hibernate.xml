@@ -17,6 +17,9 @@
         <property name="sessionFactory" ref="hibernateSessionFactory"/>
     </bean>
 
+
+
+
     <!--hibernate 事务管理器-->
     <bean id="hibernateSessionFactory" name="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -35,7 +38,8 @@
         <!-- 注解方式配置 -->
         <property name="packagesToScan">
             <list>
-                <value>my.entity.*</value>
+                <!--<value>my.entity.*</value>-->
+                <value>my.entity</value>
                 <!--<value>org.jeecgframework.web.demo.entity.*</value>-->
                 <!--<value>org.jeecgframework.web.test.entity.*</value>-->
                 <!--<value>org.jeecgframework.web.cgform.entity.*</value>-->

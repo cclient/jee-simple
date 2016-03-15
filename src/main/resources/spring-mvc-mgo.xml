@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd"
+
+       default-autowire="byName" default-lazy-init="false">
+    <!--xmlns:mongo="http://www.springframework.org/schema/data/mongo"-->
+    <bean id="mongoClientOptions" class="org.springframework.data.mongodb.core.MongoClientOptionsFactoryBean">
+        <property name="singleton" value="true"></property>
+    </bean>
+    <bean id="mongoClient" class="org.springframework.data.mongodb.core.MongoClientFactoryBean">
+        <property name="host" value="localhost"></property>
+        <property name="port" value="27020"></property>
+        <property name="mongoClientOptions" ref="mongoClientOptions"/>
+    </bean>
+    <bean id="mongoDbFactory" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+        <constructor-arg name="mongoClient" ref="mongoClient"></constructor-arg>
+        <constructor-arg name="databaseName" value="shenji"></constructor-arg>
+    </bean>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"></constructor-arg>
+    </bean>
+
+
+
+    <context:component-scan base-package="sample">
+    </context:component-scan>
+
+
+    <mongo:repositories base-package="sample" mongo-template-ref="mongoTemplate">
+    </mongo:repositories>
+
+    <!--<bean id="ShopMgoRepository" name="ShopMgoRepository" class="my.dao.ShopMgoRepository"></bean>-->
+
+    <!--<mongo:repositories base-package="my.entity">-->
+    <!--<include-filter type="assignable" expression="my.tt.ShopRepository"></include-filter>-->
+    <!--</mongo:repositories>-->
+
+
+    <!--手动配的话,代码里@Repository("ShopMgoDao") 写的name会被xml的覆盖.xml没设则无效-->
+    <!--<bean id="mgoDao" name="ShopMgoDao" class="my.dao.ShopMgoDao">-->
+        <!--<constructor-arg index="0" ref="mongoDbFactory"></constructor-arg>-->
+        <!--<constructor-arg index="1" name="DBName" value="shenji"></constructor-arg>-->
+        <!--<constructor-arg index="2" name="ColName" value="shop"></constructor-arg>-->
+    <!--</bean>-->
+
+    <!--<context:component-scan base-package="my.dao">-->
+        <!--<context:include-filter expression="my.dao.ShopMgoTemplateDao" type="assignable"></context:include-filter>-->
+        <!--<context:exclude-filter expression="my.idao.IAccountDao" type="assignable"></context:exclude-filter>-->
+    <!--</context:component-scan>-->
+
+</beans>

@@ -58,8 +58,8 @@
 
 
 
-    <!--&lt;!&ndash;对标注 Transactional注解的bean 进行加工增强&ndash;&gt;-->
-    <!--<tx:annotation-driven transaction-manager="transactionManager_hibernate"/>-->
+    <!--对标注 Transactional注解的bean 进行加工增强-->
+    <tx:annotation-driven transaction-manager="transactionManager_hibernate"/>
 
     <!--<bean class="my.dao.WriteLog"></bean>-->
 

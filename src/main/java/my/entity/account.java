@@ -3,10 +3,11 @@ package my.entity;
 import javax.persistence.*;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.stereotype.Repository;
 
+//import org.hibernate.annotations.GenericGenerator;
+//import org.springframework.stereotype.Repository;
 
+//@Id
 @Entity
 @Table(name = "Account", schema = "")
 @SuppressWarnings("serial")
@@ -16,6 +17,9 @@ public class Account {
     /**
      * id
      */
+    @Id
+    @org.springframework.data.annotation.Id
+//    默认是hibernate,引用org.springframework.data.annotation.Id 则为spring的
     private Integer id;
     /**
      * 外键关联cgform_head
@@ -37,7 +41,7 @@ public class Account {
     @Id
     @GeneratedValue
     @Column(name = "id", unique = true, nullable = false)
-    @GenericGenerator(name = "generator", strategy = "increment")
+//    @GenericGenerator(name = "generator", strategy = "increment")
     public Integer getId() {
         return id;
     }
